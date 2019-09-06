@@ -1,4 +1,5 @@
 import callService from '../../core/api/api-call';
+import actionUtils from '../../core/common/action-utils';
 
 // actions
 
@@ -13,7 +14,11 @@ export function sessionCheck() {
     params.URI = '/api/member/callService';
 
     return callService(params).then( (responseJson) => {
-      dispatch({ type: "LOAD_SESSION_CHECK", responseJson });
+    	if (responseJson != null && responseJson.protocalError == null){
+    		dispatch({ type: "LOAD_SESSION_CHECK", responseJson });
+    	} else {
+			actionUtils.checkConnectivity(responseJson,dispatch);
+		}
     }).catch(error => {
       throw(error);
     });

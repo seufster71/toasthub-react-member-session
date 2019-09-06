@@ -4,6 +4,7 @@ export default function sessionReducer(state = {}, action) {
 	case 'LOAD_SESSION_CHECK': {
 		if (action.responseJson != null && action.responseJson.status != null && action.responseJson.status === "SUCCESS") {
 			myState.sessionActive = true;
+			myState.user = action.responseJson.params.USER;
 		} else {
 			myState.sessionActive = false;
 			myState.user = null;
