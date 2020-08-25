@@ -22,7 +22,7 @@ export default function sessionReducer(state = {}, action) {
 		return Object.assign({}, state, {status:''});
 	}
 	case 'PROCESS_LOGOUT': {
-		return Object.assign({}, state, {sessionActive:false, user:null});
+		return Object.assign({}, state, {sessionActive:false, user:null, status:''});
 	}
 	case 'VIEW_PORT_CHANGE': {
 		if (action.width <= 768) {
