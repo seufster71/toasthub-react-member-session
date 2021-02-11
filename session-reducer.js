@@ -124,7 +124,7 @@ export default function sessionReducer(state = {}, action) {
 			let inputFields = {};
 			let prefForms = reducerUtils.getPrefForms(action);
 			for (let i = 0; i < prefForms.MEMBER_PROFILE_FORM.length; i++) {
-				if (prefForms.PM_PRODUCT_FORM[i].group === "FORM1") {
+				if (prefForms.MEMBER_PROFILE_FORM[i].group === "FORM1") {
 					let classModel = JSON.parse(prefForms.MEMBER_PROFILE_FORM[i].classModel);
 					if (action.responseJson.params.item != null && action.responseJson.params.item[classModel.field]) {
 						inputFields[prefForms.MEMBER_PROFILE_FORM[i].name] = action.responseJson.params.item[classModel.field];
@@ -199,6 +199,18 @@ export default function sessionReducer(state = {}, action) {
 		return Object.assign({}, state, {
 			isDeleteModalOpen: true,
 			selected: action.item
+		});
+	}
+	case 'MEMBER_PROFILE_UPDATE_SESSION': {
+		let mySelected = { ...state.selected };
+		for (let i = 0; i < state.prefForms.MEMBER_PROFILE_FORM.length; i++) {
+			if (state.prefForms.MEMBER_PROFILE_FORM[i].group === "FORM1") {
+				let classModel = JSON.parse(state.prefForms.MEMBER_PROFILE_FORM[i].classModel);
+				mySelected[classModel.field] = state.inputFields[state.prefForms.MEMBER_PROFILE_FORM[i].name];
+			}
+		}
+		return Object.assign({}, state, {
+			selected: mySelected
 		});
 	}
 	default:
