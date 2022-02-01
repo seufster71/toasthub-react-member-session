@@ -26,11 +26,12 @@ export default function sessionReducer(state = {}, action) {
 			myState.sessionActive = false;
 			myState.selected = null;
 		}
+		myState.callComplete = true;
 		return Object.assign({}, state, myState);
 	}
 	case 'SAVE_SESSION': {
 		if (action.responseJson != null && action.responseJson.params != null && action.responseJson.params.USER != null) {
-			return Object.assign({}, state, {sessionActive:true, status:'JUST_LOGGEDIN', selected:action.responseJson.params.USER});
+			return Object.assign({}, state, {sessionActive:true, status:'JUST_LOGGEDIN', selected:action.responseJson.params.USER, callComplete:true});
 		} else {
 			return state;
 		}
@@ -39,7 +40,7 @@ export default function sessionReducer(state = {}, action) {
 		return Object.assign({}, state, {status:''});
 	}
 	case 'PROCESS_LOGOUT': {
-		return Object.assign({}, state, {sessionActive:false, selected:null, status:''});
+		return Object.assign({}, state, {sessionActive:false, selected:null, status:'', callComplete:false});
 	}
 	case 'VIEW_PORT_CHANGE': {
 		if (action.width <= 768) {
